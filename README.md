@@ -136,14 +136,6 @@ docker run hello-world
 
 ---
 
-## ⚠️ Observações importantes
-
-* **Docker Engine** e **Docker CLI** são gratuitos
-* **Docker Desktop não é necessário** no Ubuntu
-* O comando `docker compose` é fornecido via **plugin oficial**
-
----
-
 ## ✅ Instalação concluída com sucesso
 
 🚀 Seu ambiente Docker está pronto para uso!
