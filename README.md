@@ -1,104 +1,149 @@
 # 🐳 Instalação Completa do Docker no Ubuntu 24.04 (Noble)
 
-Este documento descreve uma instalação limpa e definitiva do Docker
-no Ubuntu 24.04, incluindo limpeza de configurações antigas,
-configuração correta de chave GPG e instalação final.
+Este guia descreve uma **instalação limpa e recomendada do Docker** no Ubuntu 24.04 LTS (Noble Numbat). Ele inclui a remoção de configurações antigas, configuração correta da chave GPG oficial e a instalação final do Docker Engine e seus plugins.
 
-====================================================================
-REQUISITOS
-- Ubuntu 24.04 LTS (Noble Numbat)
-- Acesso sudo
-- Conexão com a internet
-====================================================================
+---
 
-====================================================================
-1) REMOVER CONFIGURAÇÕES ANTIGAS DO DOCKER
-====================================================================
+## 📋 Requisitos
 
+* Ubuntu **24.04 LTS (Noble Numbat)**
+* Acesso com **sudo**
+* Conexão com a **internet**
+
+---
+
+## 1️⃣ Remover configurações antigas do Docker
+
+Remova repositórios e chaves antigas para evitar conflitos:
+
+```bash
 sudo rm -f /etc/apt/sources.list.d/docker.*
 sudo rm -f /etc/apt/keyrings/docker.*
 sudo rm -f /usr/share/keyrings/docker*
+```
 
-====================================================================
-2) LIMPAR CACHE DO APT
-====================================================================
+---
 
+## 2️⃣ Limpar cache do APT
+
+```bash
 sudo apt clean
 sudo rm -rf /var/lib/apt/lists/*
+```
 
-====================================================================
-3) ADICIONAR A CHAVE GPG OFICIAL DO DOCKER
-====================================================================
+---
 
+## 3️⃣ Adicionar a chave GPG oficial do Docker
+
+Crie o diretório de keyrings (caso não exista):
+
+```bash
 sudo mkdir -p /etc/apt/keyrings
+```
 
+Baixe e registre a chave GPG oficial:
+
+```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
-sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
 
+Ajuste as permissões:
+
+```bash
 sudo chmod a+r /etc/apt/keyrings/docker.gpg
+```
 
-(OPCIONAL) Verificar se a chave foi importada corretamente:
+### 🔍 (Opcional) Verificar a chave importada
+
+```bash
 gpg --show-keys /etc/apt/keyrings/docker.gpg
+```
 
-A chave deve conter o fingerprint:
+O fingerprint esperado deve conter:
+
+```
 7EA0 A9C3 F273 FCD8
+```
 
-====================================================================
-4) ADICIONAR O REPOSITÓRIO OFICIAL DO DOCKER (UBUNTU 24.04)
-====================================================================
+---
 
+## 4️⃣ Adicionar o repositório oficial do Docker (Ubuntu 24.04)
+
+```bash
 echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] \
 https://download.docker.com/linux/ubuntu noble stable" | \
-sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
 
-====================================================================
-5) ATUALIZAR LISTA DE PACOTES
-====================================================================
+---
 
+## 5️⃣ Atualizar a lista de pacotes
+
+```bash
 sudo apt update
+```
 
-Não deve haver erros NO_PUBKEY ou avisos de duplicação.
+✅ Não devem aparecer erros `NO_PUBKEY` nem avisos de repositórios duplicados.
 
-====================================================================
-6) INSTALAR DOCKER ENGINE E PLUGINS OFICIAIS
-====================================================================
+---
 
+## 6️⃣ Instalar Docker Engine e plugins oficiais
+
+```bash
 sudo apt install -y \
-docker-ce \
-docker-ce-cli \
-containerd.io \
-docker-buildx-plugin \
-docker-compose-plugin
+  docker-ce \
+  docker-ce-cli \
+  containerd.io \
+  docker-buildx-plugin \
+  docker-compose-plugin
+```
 
-====================================================================
-7) VERIFICAR INSTALAÇÃO
-====================================================================
+---
 
+## 7️⃣ Verificar a instalação
+
+```bash
 docker --version
+```
 
-====================================================================
-8) TESTE RÁPIDO DE FUNCIONAMENTO
-====================================================================
+---
 
+## 8️⃣ Teste rápido de funcionamento
+
+```bash
 sudo docker run hello-world
+```
 
-Se aparecer a mensagem de boas-vindas, o Docker está funcionando.
+Se a mensagem de boas-vindas for exibida, o Docker está funcionando corretamente 🎉
 
-====================================================================
-9) (OPCIONAL) USAR DOCKER SEM SUDO
-====================================================================
+---
 
+## 9️⃣ (Opcional) Usar Docker sem sudo
+
+Adicione seu usuário ao grupo `docker`:
+
+```bash
 sudo usermod -aG docker $USER
 newgrp docker
+```
 
 Teste novamente:
+
+```bash
 docker run hello-world
+```
 
-====================================================================
-OBSERVAÇÕES IMPORTANTES
-- Docker Engine e Docker CLI são gratuitos
-- Docker Desktop não é necessário no Ubuntu
-- docker compose é fornecido via plugin oficial
-====================================================================
+---
 
-INSTALAÇÃO CONCLUÍDA COM SUCESSO 🚀
+## ⚠️ Observações importantes
+
+* **Docker Engine** e **Docker CLI** são gratuitos
+* **Docker Desktop não é necessário** no Ubuntu
+* O comando `docker compose` é fornecido via **plugin oficial**
+
+---
+
+## ✅ Instalação concluída com sucesso
+
+🚀 Seu ambiente Docker está pronto para uso!
